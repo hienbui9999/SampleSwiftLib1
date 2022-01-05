@@ -11,7 +11,7 @@ public class SampleSwiftLib1:XCTestCase {
         print("---------------arg in testCall2:\(arg)")
     }
     public func testCallRequest() {
-        print("----------------test call request------------------")
+        print("------------****!!!!----test call request------****!!!!------------")
         guard let url = URL(string: "https://node-clarity-testnet.make.services/rpc") else {
             print("Can not initiate url")
             return
