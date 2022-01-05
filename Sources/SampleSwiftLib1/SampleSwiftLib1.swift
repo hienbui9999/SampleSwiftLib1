@@ -1,12 +1,16 @@
 import Foundation
-public struct SampleSwiftLib1 {
+import XCTest
+public class SampleSwiftLib1:XCTestCase {
     public private(set) var text = "Hello, World!"
 
-    public init() {
+    /*public init() {
        // testCallRequest()
-    }
+    }*/
     public func testCall() {
         print("Call test")
+    }
+    public func testCall2(arg:[String:Any]) {
+        print("arg in testCall2:\(arg)")
     }
     public func testCallRequest() {
         print("-------test call request---------")
@@ -24,19 +28,28 @@ public struct SampleSwiftLib1 {
             }
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
-
+       /* DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            print("------------------------------")
+            self.testCall2()
+            print("------------------------------")
+        })*/
         // create post request
-       
-
+        let expectation = self.expectation(description: "Getting json data from casper")
+        self.waitForExpectations(timeout: 1, handler: nil)
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
+           
+
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            
             if let responseJSON = responseJSON as? [String: Any] {
                 print(responseJSON)
-                testCall()
+                self.testCall()
+                expectation.fulfill()
             } else {
                 print("Error get data")
             }
