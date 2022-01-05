@@ -2,14 +2,9 @@ import Foundation
 import XCTest
 public class SampleSwiftLib1:XCTestCase {
     public private(set) var text = "Hello, World!"
-
     /*public init() {
        // testCallRequest()
     }*/
-   
-    public func testCall2(arg:[String:Any]) {
-        print("---------------arg in testCall2:\(arg)")
-    }
     public func testCallRequest() {
         print("------------****!!!!----test call request------****!!!!------------")
         guard let url = URL(string: "https://node-clarity-testnet.make.services/rpc") else {
@@ -33,9 +28,6 @@ public class SampleSwiftLib1:XCTestCase {
         })*/
         // create post request
         let expectation = self.expectation(description: "Getting json data from casper")
-        
-        
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
