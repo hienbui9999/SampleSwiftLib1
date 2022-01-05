@@ -6,14 +6,12 @@ public class SampleSwiftLib1:XCTestCase {
     /*public init() {
        // testCallRequest()
     }*/
-    public func testCall() {
-        print("Call test")
-    }
+   
     public func testCall2(arg:[String:Any]) {
-        print("arg in testCall2:\(arg)")
+        print("---------------arg in testCall2:\(arg)")
     }
     public func testCallRequest() {
-        print("-------test call request---------")
+        print("----------------test call request------------------")
         guard let url = URL(string: "https://node-clarity-testnet.make.services/rpc") else {
             print("Can not initiate url")
             return
@@ -35,26 +33,26 @@ public class SampleSwiftLib1:XCTestCase {
         })*/
         // create post request
         let expectation = self.expectation(description: "Getting json data from casper")
-        self.waitForExpectations(timeout: 1, handler: nil)
+        
+        
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
                 return
             }
-           
+            expectation.fulfill()
 
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             
             if let responseJSON = responseJSON as? [String: Any] {
                 print(responseJSON)
-                self.testCall()
-                expectation.fulfill()
+                //self.testCall()
             } else {
                 print("Error get data")
             }
         }
-
         task.resume()
+        self.waitForExpectations(timeout: 5, handler: nil)
     }
 }
